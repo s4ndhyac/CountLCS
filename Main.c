@@ -53,7 +53,6 @@ int main()
   }
 
   //Get binstring from n and x
-
   char *a = Binstring(n, x);
 
   //Get binstring from n and x
@@ -61,7 +60,7 @@ int main()
 
   //Get LCS
   int i = 0;
-  char *lcs[] = malloc(sizeof(char *) * MAX_NUMBER);
+  char **lcs = malloc(sizeof(char *) * MAX_NUMBER);
   if (!lcs)
   {
     printf("Error in allocating memory for LCS\n");
@@ -77,9 +76,22 @@ int main()
       exit(0);
     }
   }
-  int count = CountLCS(a, b, lcs);
+
+  int len = 0;
+  int count = CountLCS(a, b, lcs, len);
 
   //output the results
+  printf("STRINGLEN: %d\n", n);
+  printf("X (%d) = %s\n", x, a);
+  printf("Y (%d) = %s\n", y, b);
+  printf("Length of LCS: %d\n", len);
+  printf("No. of LCS: %d\n", count);
+
+  int j = 0;
+  for (j = 0; j < count; j++)
+  {
+    printf("LCS %d: %s\n", j, lcs[j]);
+  }
 
   free(lcs);
   fflush(stdout);
