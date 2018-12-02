@@ -41,7 +41,7 @@ public:
 int **memo;
 Backtrack **bc;
 
-set<string> GetAllLCS(char *a, char *b, int n, int m)
+void InitializeBacktrack(char *a, char *b, int n, int m)
 {
   bc = new Backtrack *[n + 1]; //NOTE: Because here we know that n=m
   for (int i = 0; i < n; i++)
@@ -52,8 +52,6 @@ set<string> GetAllLCS(char *a, char *b, int n, int m)
       bc[i][j].setV(-1, -1, l);
     }
   }
-
-  return GetLCS(a, b, n, m);
 }
 
 set<string> GetLCS(char *a, char *b, int i, int j)
@@ -137,7 +135,8 @@ int CountLCS(const int n, char *a, char *b, set<string> &lcs)
   auto m0 = std::chrono::duration_cast<std::chrono::microseconds>(f0 - s);
   cout << "GetLCS fill memo get Count: " << m0.count() << "µs\n";
 
-  lcs = GetAllLCS(a, b, n, n);
+  InitializeBacktrack(a, b, n, n);
+  lcs = GetLCS(a, b, n, n);
 
   auto f = std::chrono::high_resolution_clock::now();
   auto m = std::chrono::duration_cast<std::chrono::microseconds>(f - s);
