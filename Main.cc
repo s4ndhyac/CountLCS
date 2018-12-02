@@ -1,9 +1,12 @@
+#include <iostream>
+#include <set>
 #include <stdio.h>
 #include <stdlib.h>
-#include "CountLCS.c"
 #include <math.h>
-#define MAX_LENGTH 20
-#define MAX_NUMBER 100 //Update after observing output
+#include "CountLCS.cc"
+#include "Binstring.cc"
+
+using namespace std;
 
 int main()
 {
@@ -59,40 +62,23 @@ int main()
   char *b = Binstring(n, y);
 
   //Get LCS
-  int i = 0;
-  char **lcs = malloc(sizeof(char *) * MAX_NUMBER);
-  if (!lcs)
-  {
-    printf("Error in allocating memory for LCS\n");
-    exit(0);
-  }
-  for (i = 0; i < MAX_NUMBER; i++)
-  {
-    lcs[i] = malloc(MAX_LENGTH + 1);
-    if (!lcs[i])
-    {
-      free(lcs);
-      printf("Error in allocating memory for LCS\n");
-      exit(0);
-    }
-  }
-
-  int len = 0;
-  int count = CountLCS(a, b, lcs, len);
+  set<string> lcs;
+  int lcsLen = CountLCS(n, a, b, lcs);
+  int count = lcs.size();
 
   //output the results
   printf("STRINGLEN: %d\n", n);
   printf("X (%d) = %s\n", x, a);
   printf("Y (%d) = %s\n", y, b);
-  printf("Length of LCS: %d\n", len);
+  printf("Length of LCS: %d\n", lcsLen);
   printf("No. of LCS: %d\n", count);
 
-  int j = 0;
-  for (j = 0; j < count; j++)
+  int i = 1;
+  set<string>::iterator it;
+  for (it = lcs.begin(); it != lcs.end(); it++)
   {
-    printf("LCS %d: %s\n", j, lcs[j]);
+    cout << "LCS " << i++ << ": " << *it << endl;
   }
 
-  free(lcs);
   fflush(stdout);
 }
