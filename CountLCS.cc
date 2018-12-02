@@ -2,12 +2,59 @@
 #include <set>
 #include <stdio.h>
 #include <chrono>
+#include <vector>
 
 using namespace std;
 
 #define MAX(x, y) (((x) > (y)) ? (x) : (y))
 
+class Backtrack
+{
+public:
+  int i;
+  int j;
+  set<string> h;
+
+  void setV(int _i, int _j, set<string> _h)
+  {
+    i = _i;
+    j = _j;
+    h = _h;
+  }
+
+  int getXKey()
+  {
+    return i;
+  }
+
+  int getYKey()
+  {
+    return j;
+  }
+
+  set<string> getH()
+  {
+    return h;
+  }
+};
+
 int **memo;
+Backtrack **bc;
+
+set<string> GetAllLCS(char *a, char *b, int n, int m)
+{
+  bc = new Backtrack *[n + 1]; //NOTE: Because here we know that n=m
+  for (int i = 0; i < n; i++)
+  {
+    for (int j = 0; j < m; j++)
+    {
+      set<string> l;
+      bc[i][j].setV(-1, -1, l);
+    }
+  }
+
+  return GetLCS(a, b, n, m);
+}
 
 set<string> GetLCS(char *a, char *b, int i, int j)
 {
@@ -19,27 +66,45 @@ set<string> GetLCS(char *a, char *b, int i, int j)
   }
   if (a[i - 1] == b[j - 1])
   {
-    set<string> tmp = GetLCS(a, b, i - 1, j - 1);
+    set<string> tmp;
+    if (bc[i - 1][j - 1].getXKey() == -1 || bc[i - 1][j - 1].getYKey() == -1)
+    {
+      tmp = GetLCS(a, b, i - 1, j - 1);
+      bc[i - 1][j - 1].setV(i - 1, j - 1, tmp);
+    }
+    else
+      tmp = bc[i - 1][j - 1].getH();
+
     set<string>::iterator it;
+    //cout << "size: " << tmp.size() << endl;
     for (it = tmp.begin(); it != tmp.end(); it++)
     {
-      string tmp = *it;
-      s.insert(tmp + a[i - 1]);
+      string t = *it;
+      //cout << "i: " << i << " j: " << j << " t+a: " << t + a[i - 1] << endl;
+      s.insert(t + a[i - 1]);
     }
   }
   else
   {
     if (memo[i - 1][j] >= memo[i][j - 1])
     {
-      s = GetLCS(a, b, i - 1, j);
+      if (bc[i - 1][j].getXKey() == -1 || bc[i - 1][j].getYKey() == -1)
+        s = GetLCS(a, b, i - 1, j);
+      else
+        s = bc[i - 1][j].getH();
     }
     if (memo[i][j - 1] >= memo[i - 1][j])
     {
-      set<string> tmp = GetLCS(a, b, i, j - 1);
+      set<string> tmp;
+      if (bc[i][j - 1].getXKey() == -1 || bc[i][j - 1].getYKey() == -1)
+        tmp = GetLCS(a, b, i, j - 1);
+      else
+        tmp = bc[i][j - 1].getH();
       set<string>::iterator it;
       for (it = tmp.begin(); it != tmp.end(); it++)
       {
         string t = *it;
+        //cout << "i: " << i << " j: " << j << " t: " << t << endl;
         s.insert(t);
       }
     }
@@ -72,7 +137,7 @@ int CountLCS(const int n, char *a, char *b, set<string> &lcs)
   auto m0 = std::chrono::duration_cast<std::chrono::microseconds>(f0 - s);
   cout << "GetLCS fill memo get Count: " << m0.count() << "µs\n";
 
-  lcs = GetLCS(a, b, n, n);
+  lcs = GetAllLCS(a, b, n, n);
 
   auto f = std::chrono::high_resolution_clock::now();
   auto m = std::chrono::duration_cast<std::chrono::microseconds>(f - s);
