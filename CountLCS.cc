@@ -52,16 +52,16 @@ int CountLCS(const int n, char *a, char *b, set<string> &lcs)
   for (int i = 0; i < n + 1; ++i)
     memo[i] = new int[n + 1];
   int i, j;
-  for (i = n; i >= 0; i--)
+  for (i = 0; i <= n; i++)
   {
-    for (j = n; j >= 0; j--)
+    for (j = 0; j <= n; j++)
     {
-      if (a[i] == '\0' || b[j] == '\0')
+      if (i == 0 || j == 0)
         memo[i][j] = 0;
-      else if (a[i] == b[j])
-        memo[i][j] = 1 + memo[i + 1][j + 1];
+      else if (a[i - 1] == b[j - 1])
+        memo[i][j] = 1 + memo[i - 1][j - 1];
       else
-        memo[i][j] = MAX(memo[i + 1][j], memo[i][j + 1]);
+        memo[i][j] = MAX(memo[i][j - 1], memo[i - 1][j]);
     }
   }
 
