@@ -1,6 +1,7 @@
 #include <iostream>
 #include <set>
 #include <stdio.h>
+#include <chrono>
 
 using namespace std;
 
@@ -48,6 +49,8 @@ set<string> GetLCS(char *a, char *b, int i, int j)
 
 int CountLCS(const int n, char *a, char *b, set<string> &lcs)
 {
+  auto s = std::chrono::high_resolution_clock::now();
+
   memo = new int *[n + 1];
   for (int i = 0; i < n + 1; ++i)
     memo[i] = new int[n + 1];
@@ -65,6 +68,15 @@ int CountLCS(const int n, char *a, char *b, set<string> &lcs)
     }
   }
 
+  auto f0 = std::chrono::high_resolution_clock::now();
+  auto m0 = std::chrono::duration_cast<std::chrono::microseconds>(f0 - s);
+  cout << "GetLCS fill memo get Count: " << m0.count() << "µs\n";
+
   lcs = GetLCS(a, b, n, n);
+
+  auto f = std::chrono::high_resolution_clock::now();
+  auto m = std::chrono::duration_cast<std::chrono::microseconds>(f - s);
+  cout << "GetLCS: " << m.count() << "µs\n";
+
   return memo[n][n];
 }
