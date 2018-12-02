@@ -66,5 +66,5 @@ int CountLCS(const int n, char *a, char *b, set<string> &lcs)
   }
 
   lcs = GetLCS(a, b, n, n);
-  return memo[0][0];
+  return memo[n][n];
 }
