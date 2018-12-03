@@ -15,6 +15,12 @@ public:
   int j;
   set<string> h;
 
+  Backtrack() : h()
+  {
+    i = -1;
+    j = -1;
+  };
+
   void setV(int _i, int _j, set<string> _h)
   {
     i = _i;
@@ -41,16 +47,12 @@ public:
 int **memo;
 Backtrack **bc;
 
-void InitializeBacktrack(char *a, char *b, int n, int m)
+void InitializeBacktrack(char *a, char *b, const int n, const int m)
 {
-  bc = new Backtrack *[n + 1]; //NOTE: Because here we know that n=m
-  for (int i = 0; i < n; i++)
+  bc = new Backtrack *[n + 1];
+  for (int i = 0; i < n + 1; i++)
   {
-    for (int j = 0; j < m; j++)
-    {
-      set<string> l;
-      bc[i][j].setV(-1, -1, l);
-    }
+    bc[i] = new Backtrack[m + 1];
   }
 }
 
@@ -74,11 +76,9 @@ set<string> GetLCS(char *a, char *b, int i, int j)
       tmp = bc[i - 1][j - 1].getH();
 
     set<string>::iterator it;
-    //cout << "size: " << tmp.size() << endl;
     for (it = tmp.begin(); it != tmp.end(); it++)
     {
       string t = *it;
-      //cout << "i: " << i << " j: " << j << " t+a: " << t + a[i - 1] << endl;
       s.insert(t + a[i - 1]);
     }
   }
@@ -102,7 +102,6 @@ set<string> GetLCS(char *a, char *b, int i, int j)
       for (it = tmp.begin(); it != tmp.end(); it++)
       {
         string t = *it;
-        //cout << "i: " << i << " j: " << j << " t: " << t << endl;
         s.insert(t);
       }
     }
