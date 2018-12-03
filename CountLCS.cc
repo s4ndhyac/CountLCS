@@ -86,7 +86,10 @@ set<string> GetLCS(char *a, char *b, int i, int j)
     if (memo[i - 1][j] >= memo[i][j - 1])
     {
       if (bc[i - 1][j].getXKey() == -1 || bc[i - 1][j].getYKey() == -1)
+      {
         s = GetLCS(a, b, i - 1, j);
+        bc[i - 1][j].setV(i - 1, j, s);
+      }
       else
         s = bc[i - 1][j].getH();
     }
@@ -94,7 +97,10 @@ set<string> GetLCS(char *a, char *b, int i, int j)
     {
       set<string> tmp;
       if (bc[i][j - 1].getXKey() == -1 || bc[i][j - 1].getYKey() == -1)
+      {
         tmp = GetLCS(a, b, i, j - 1);
+        bc[i][j - 1].setV(i, j - 1, tmp);
+      }
       else
         tmp = bc[i][j - 1].getH();
       set<string>::iterator it;
