@@ -3,7 +3,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include <chrono>
 #include "CountLCS.cc"
 #include "Binstring.cc"
 
@@ -56,31 +55,15 @@ int main()
     exit(0);
   }
 
-  //Program execution starts
-  auto start = std::chrono::high_resolution_clock::now();
-
   //Get binstring from n and x
   char *a = Binstring(n, x);
-
-  auto f1 = std::chrono::high_resolution_clock::now();
-  auto m1 = std::chrono::duration_cast<std::chrono::microseconds>(f1 - start);
-  cout << "X: " << m1.count() << "µs\n";
 
   //Get binstring from n and x
   char *b = Binstring(n, y);
 
-  auto f2 = std::chrono::high_resolution_clock::now();
-  auto m2 = std::chrono::duration_cast<std::chrono::microseconds>(f2 - start);
-  cout << "Y: " << m2.count() << "µs\n";
-
   //Get LCS
   set<string> lcs;
   int lcsLen = CountLCS(n, a, b, lcs);
-
-  auto f3 = std::chrono::high_resolution_clock::now();
-  auto m3 = std::chrono::duration_cast<std::chrono::microseconds>(f3 - start);
-  cout << "CountLCS Total: " << m3.count() << "µs\n";
-
   int count = lcs.size();
 
   //output the results
@@ -96,11 +79,6 @@ int main()
   {
     cout << "LCS " << i++ << ": " << *it << endl;
   }
-
-  //Program ends
-  auto finish = std::chrono::high_resolution_clock::now();
-  auto microseconds = std::chrono::duration_cast<std::chrono::microseconds>(finish - start);
-  cout << "Total: " << microseconds.count() << "µs\n";
 
   fflush(stdout);
 }
