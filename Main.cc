@@ -57,8 +57,8 @@ int main()
   // }
 
   //freopen("output.txt", "w", stdout);
-  int n = 14;
-  const int max = pow(2, 14) - 1;
+  int n = 7;
+  const int max = pow(2, 7) - 1;
   int **cache;
   int i = 0;
   int j = 0;
@@ -73,9 +73,9 @@ int main()
   }
   int x = 0;
   int y = 0;
-  int maxCount = 46;
+  int maxCount = 0;
 
-  for (x = 793; x <= max; x++)
+  for (x = 0; x <= max; x++)
   {
     for (y = 0; y <= max; y++)
     {
@@ -87,6 +87,7 @@ int main()
         set<string> lcs;
         int lcsLen = CountLCS(n, a, b, lcs);
         int count = lcs.size();
+        cache[x][y] = count;
         auto finish = std::chrono::high_resolution_clock::now();
         auto microseconds = std::chrono::duration_cast<std::chrono::microseconds>(finish - start);
         if (count > maxCount)
@@ -143,6 +144,6 @@ int main()
   // auto finish = std::chrono::high_resolution_clock::now();
   // auto microseconds = std::chrono::duration_cast<std::chrono::microseconds>(finish - start);
   // cout << "Total: " << microseconds.count() << "µs\n";
-
+  free(cache);
   fflush(stdout);
 }
