@@ -104,5 +104,6 @@ int GetCommomSubsequencesCount(char *s1, char *s2, const int N1, const int N2)
 
   int max = dp[N1][N2];
   delete dp;
+  delete memo;
   return max;
 }
