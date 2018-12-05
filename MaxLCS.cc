@@ -36,14 +36,6 @@ int GetCommomSubsequencesCount(shared_ptr<char> s1, shared_ptr<char> s2, const i
   for (int i = 0; i < N1 + 1; ++i)
     dp[i] = new int[N2 + 1];
 
-  // for (int i = 0; i <= N1; i++) //N1 is size of 1st string
-  // {
-  //   for (int j = 0; j <= N2; j++) //N2 is size of 2nd string
-  //   {
-  //     dp[i][j] = 0;
-  //   }
-  // }
-
   for (int b = 0; b <= N2; b++)
   {
     for (int a = 0; a <= N1; a++)
@@ -69,42 +61,6 @@ int GetCommomSubsequencesCount(shared_ptr<char> s1, shared_ptr<char> s2, const i
       }
     }
   }
-
-  //   for j ← 0 to n do
-  //     for i ← 0 to m do
-  //         if i = 0 or j = 0 then
-  //             D[i, j] ← 1
-  //         else
-  //             D[i, j] ← 0
-  //             if ai  = bj  then
-  //                 D[i, j] ← D[i − 1, j − 1]
-  //             else if L[i − 1, j] = L[i, j] then
-  //                 D[i, j] ← D[i, j] + D[i − 1, j]
-  //             endif
-  //             if L[i, j − 1] = L[i, j] then
-  //                 D[i, j] ← D[i, j] + D[i, j − 1]
-  //             endif
-  //             if L[i − 1, j − 1] = L[i, j] then
-  //                 D[i, j] ← D[i, j] − D[i − 1, j − 1]
-  //             endif
-  //         end if
-  //     endfor
-  // endfor
-
-  // for (int i = 1; i <= N1; i++)
-  // {
-  //   for (int j = 1; j <= N2; j++)
-  //   {
-  //     if (s1[i - 1] == s2[j - 1])
-  //     {
-  //       dp[i][j] = 1 + dp[i][j - 1] + dp[i - 1][j];
-  //     }
-  //     else
-  //     {
-  //       dp[i][j] = dp[i][j - 1] + dp[i - 1][j] - dp[i - 1][j - 1];
-  //     }
-  //   }
-  // }
 
   int max = dp[N1][N2];
 
