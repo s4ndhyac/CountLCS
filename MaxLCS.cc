@@ -6,15 +6,15 @@
 
 using namespace std;
 
-short **dp;
-short **memo;
+int **dp;
+int **memo;
 
-void LCSLength(const short n, shared_ptr<char> a, shared_ptr<char> b)
+void LCSLength(const int n, shared_ptr<char> a, shared_ptr<char> b)
 {
-  memo = new short *[n + 1];
-  for (short i = 0; i < n + 1; ++i)
-    memo[i] = new short[n + 1];
-  short i, j;
+  memo = new int *[n + 1];
+  for (int i = 0; i < n + 1; ++i)
+    memo[i] = new int[n + 1];
+  int i, j;
   for (i = 0; i <= n; i++)
   {
     for (j = 0; j <= n; j++)
@@ -32,9 +32,9 @@ void LCSLength(const short n, shared_ptr<char> a, shared_ptr<char> b)
 int GetCommomSubsequencesCount(shared_ptr<char> s1, shared_ptr<char> s2, const int N1, const int N2)
 {
   LCSLength(N1, s1, s2);
-  dp = new short *[N1 + 1];
-  for (short i = 0; i < N1 + 1; ++i)
-    dp[i] = new short[N2 + 1];
+  dp = new int *[N1 + 1];
+  for (int i = 0; i < N1 + 1; ++i)
+    dp[i] = new int[N2 + 1];
 
   // for (int i = 0; i <= N1; i++) //N1 is size of 1st string
   // {
@@ -44,9 +44,9 @@ int GetCommomSubsequencesCount(shared_ptr<char> s1, shared_ptr<char> s2, const i
   //   }
   // }
 
-  for (short b = 0; b <= N2; b++)
+  for (int b = 0; b <= N2; b++)
   {
-    for (short a = 0; a <= N1; a++)
+    for (int a = 0; a <= N1; a++)
     {
       if (a == 0 || b == 0)
         dp[a][b] = 1;
@@ -108,11 +108,11 @@ int GetCommomSubsequencesCount(shared_ptr<char> s1, shared_ptr<char> s2, const i
 
   int max = dp[N1][N2];
 
-  for (short i = 0; i < N1 + 1; ++i)
+  for (int i = 0; i < N1 + 1; ++i)
     delete[] dp[i];
   delete[] dp;
 
-  for (short i = 0; i < N1 + 1; ++i)
+  for (int i = 0; i < N1 + 1; ++i)
     delete[] memo[i];
   delete[] memo;
 

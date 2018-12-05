@@ -55,10 +55,10 @@ int main()
   //   exit(0);
   // }
 
-  short x = 0;
-  short y = 0;
-  short max = pow(2, n) - 1;
-  short maxCount = 0;
+  int x = 0;
+  int y = 0;
+  int max = pow(2, n) - 1;
+  int maxCount = 0;
   for (x = 0; x <= max; x++)
   {
     for (y = 0; y <= max; y++)

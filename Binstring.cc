@@ -7,8 +7,8 @@ using namespace std;
 shared_ptr<char> Binstring(int n, int x)
 {
   std::shared_ptr<char> r(new char[n + 1], std::default_delete<char[]>());
-  int i, tmp;
-  int c = 0;
+  long i, tmp;
+  long c = 0;
   for (i = n - 1; i >= 0; i--)
   {
     tmp = x >> i;
