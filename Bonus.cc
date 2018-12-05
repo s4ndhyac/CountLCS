@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <memory>
 #include "MaxLCS.cc"
 #include "Binstring.cc"
 
@@ -54,16 +55,18 @@ int main()
   //   exit(0);
   // }
 
-  int x = 0;
-  int y = 0;
-  int max = pow(2, n) - 1;
-  int maxCount = 0;
+  short x = 0;
+  short y = 0;
+  short max = pow(2, n) - 1;
+  short maxCount = 0;
   for (x = 0; x <= max; x++)
   {
     for (y = 0; y <= max; y++)
     {
-      char *a = Binstring(n, x);
-      char *b = Binstring(n, y);
+      std::shared_ptr<char> a(new char[n + 1], std::default_delete<char[]>());
+      std::shared_ptr<char> b(new char[n + 1], std::default_delete<char[]>());
+      a = Binstring(n, x);
+      b = Binstring(n, y);
       int count = GetCommomSubsequencesCount(a, b, n, n);
       if (count > maxCount)
       {
@@ -116,6 +119,4 @@ int main()
   // auto finish = std::chrono::high_resolution_clock::now();
   // auto microseconds = std::chrono::duration_cast<std::chrono::microseconds>(finish - start);
   // cout << "Total: " << microseconds.count() << "µs\n";
-
-  fflush(stdout);
 }

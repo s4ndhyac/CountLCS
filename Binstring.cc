@@ -1,23 +1,25 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <memory>
 
-char *Binstring(int n, int x)
+using namespace std;
+
+shared_ptr<char> Binstring(int n, int x)
 {
-  char *r = (char *)malloc(n + 1);
-
+  std::shared_ptr<char> r(new char[n + 1], std::default_delete<char[]>());
   int i, tmp;
   int c = 0;
   for (i = n - 1; i >= 0; i--)
   {
     tmp = x >> i;
     if (tmp & 1)
-      *(r + c) = 1 + '0';
+      *(r.get() + c) = 1 + '0';
     else
-      *(r + c) = 0 + '0';
+      *(r.get() + c) = 0 + '0';
 
     c++;
   }
 
-  *(r + c) = '\0';
+  *(r.get() + c) = '\0';
   return r;
 }
