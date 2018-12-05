@@ -58,26 +58,42 @@ int main()
 
   //freopen("output.txt", "w", stdout);
   int n = 14;
-  int max = pow(2, 14) - 1;
+  const int max = pow(2, 14) - 1;
+  int **cache;
+  int i = 0;
+  int j = 0;
+  for (i = 0; i <= max; i++)
+  {
+    cache = new int *[max + 1];
+    for (j = 0; j <= max; j++)
+    {
+      cache[i] = new int[max + 1];
+      cache[i][j] = -1;
+    }
+  }
   int x = 0;
   int y = 0;
-  int maxCount = 0;
-  for (x = 0; x <= max; x++)
+  int maxCount = 46;
+
+  for (x = 793; x <= max; x++)
   {
     for (y = 0; y <= max; y++)
     {
-      auto start = std::chrono::high_resolution_clock::now();
-      char *a = Binstring(n, x);
-      char *b = Binstring(n, y);
-      set<string> lcs;
-      int lcsLen = CountLCS(n, a, b, lcs);
-      int count = lcs.size();
-      auto finish = std::chrono::high_resolution_clock::now();
-      auto microseconds = std::chrono::duration_cast<std::chrono::microseconds>(finish - start);
-      if (count > maxCount)
+      if (cache[x][y] == -1)
       {
-        maxCount = count;
-        cout << "x: " << x << " y: " << y << " s: " << maxCount << " t: " << microseconds.count() << endl;
+        auto start = std::chrono::high_resolution_clock::now();
+        char *a = Binstring(n, x);
+        char *b = Binstring(n, y);
+        set<string> lcs;
+        int lcsLen = CountLCS(n, a, b, lcs);
+        int count = lcs.size();
+        auto finish = std::chrono::high_resolution_clock::now();
+        auto microseconds = std::chrono::duration_cast<std::chrono::microseconds>(finish - start);
+        if (count > maxCount)
+        {
+          maxCount = count;
+          cout << "x: " << x << " y: " << y << " s: " << maxCount << " t: " << microseconds.count() << endl;
+        }
       }
     }
   }
