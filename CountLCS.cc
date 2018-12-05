@@ -1,7 +1,6 @@
 #include <iostream>
 #include <set>
 #include <stdio.h>
-#include <chrono>
 #include <vector>
 
 using namespace std;
@@ -136,16 +135,16 @@ int CountLCS(const int n, char *a, char *b, set<string> &lcs)
     }
   }
 
-  auto f0 = std::chrono::high_resolution_clock::now();
-  auto m0 = std::chrono::duration_cast<std::chrono::microseconds>(f0 - s);
-  cout << "GetLCS fill memo get Count: " << m0.count() << "µs\n";
+  // auto f0 = std::chrono::high_resolution_clock::now();
+  // auto m0 = std::chrono::duration_cast<std::chrono::microseconds>(f0 - s);
+  // cout << "GetLCS fill memo get Count: " << m0.count() << "µs\n";
 
   InitializeBacktrack(a, b, n, n);
   lcs = GetLCS(a, b, n, n);
 
-  auto f = std::chrono::high_resolution_clock::now();
-  auto m = std::chrono::duration_cast<std::chrono::microseconds>(f - s);
-  cout << "GetLCS: " << m.count() << "µs\n";
+  // auto f = std::chrono::high_resolution_clock::now();
+  // auto m = std::chrono::duration_cast<std::chrono::microseconds>(f - s);
+  // cout << "GetLCS: " << m.count() << "µs\n";
 
   return memo[n][n];
 }
